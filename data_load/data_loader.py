@@ -40,7 +40,11 @@ class Dataset_Custom(Dataset):
         self.__read_data__()
 
     def __read_data__(self):
-        self.scaler = StandardScaler()
+        '''
+        数据格式说明：Entries: date, open price, high price, low price, close price, volume, movement percent(ajusted close price's movement percent)
+        Note: open, high, low, close prices are normalized values.
+        '''
+        self.scaler = StandardScaler() #标准正态分布函数
         df_raw = pd.read_csv(os.path.join(self.root_path, self.data_path))
         length = len( df_raw)
         num_train = int(length*0.7)
@@ -56,11 +60,11 @@ class Dataset_Custom(Dataset):
         df_data = df_raw[cols_data]
 
         train_data = df_data[border1s[0]:border2s[0]]
-        self.scaler.fit(train_data.values)
-        data = self.scaler.transform(df_data.values)
+        self.scaler.fit(train_data.values) #从训练数据中计算方差和均值
+        data = self.scaler.transform(df_data.values) #把分布标准正态化
 
-        df_stamp = pd.DatetimeIndex(df_raw[border1:border2]['date'])
-        data_stamp = time_features(df_stamp)
+        df_stamp = pd.DatetimeIndex(df_raw[border1:border2]['date']) #训练数据集的日期标签
+        data_stamp = time_features(df_stamp) #把日期时间序列转化为多个时间层次的序列，并且把序列的数值归一到【-0.5， +0.5】
 
         self.data_x = data[border1:border2]
         self.data_y = data[border1:border2]
@@ -73,8 +77,8 @@ class Dataset_Custom(Dataset):
         r_end = r_begin + self.pred_len
 
         seq_x = self.data_x[s_begin:s_end]
-        seq_y = self.data_y[r_begin:r_end, -1:]
-        seq_x_mark = self.data_stamp[s_begin:s_end]
+        seq_y = self.data_y[r_begin:r_end, -1:] # adjust close price movement percent 作为target
+        seq_x_mark = self.data_stamp[s_begin:s_end] # 时间标签
         seq_y_mark = self.data_stamp[r_begin:r_end]
 
         return seq_x, seq_y, seq_x_mark, seq_y_mark

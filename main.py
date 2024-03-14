@@ -47,7 +47,7 @@ parser.add_argument('--num_channels_dec', type=int, default=32, help='number of 
 parser.add_argument('--num_latent_per_group', type=int, default=8, help='number of channels in latent variables per group')
 
 # Training settings
-parser.add_argument('--num_workers', type=int, default=5, help='data loader num workers')
+parser.add_argument('--num_workers', type=int, default=1, help='data loader num workers') #set to 1 for debug
 parser.add_argument('--patience', type=int, default=3, help='early stopping patience')
 parser.add_argument('--itr', type=int, default=5, help='experiment times')
 parser.add_argument('--train_epochs', type=int, default=20, help='train epochs')
