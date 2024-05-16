@@ -22,7 +22,8 @@ If you find this repository useful, please cite our paper.
 @inproceedings{koa2023diffusion,
   title={Diffusion Variational Autoencoder for Tackling Stochasticity in Multi-Step Regression Stock Price Prediction},
   author={Koa, Kelvin J.L. and Ma, Yunshan and Ng, Ritchie and Chua, Tat-Seng},
-  booktitle={Proceedings of the 32nd ACM International Conference on Information \& Knowledge Management},
+  booktitle={Proceedings of the 32nd ACM International Conference on Information and Knowledge Management},
+  pages={1087–1096},
   year={2023}
 }
 ```
